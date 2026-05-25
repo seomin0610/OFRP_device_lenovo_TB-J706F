@@ -5,7 +5,7 @@ OrangeFox Recovery Project (OFRP) for Lenovo TB-J706F
 
 ## How to build
 Check OFRP official guide https://wiki.orangefox.tech/en/dev/building
-```
+```bash
 cd ~/fox_12.1
 export ALLOW_MISSING_DEPENDENCIES=true
 export FOX_BUILD_DEVICE=pearl_prc_wifi
@@ -18,13 +18,13 @@ mka adbd recoveryimage 2>&1 | tee build.log
 ## How to flash
 
 (in bootloader)
-```
+```bash
 fastboot flash vbmeta --disable-verity --disable-verification vbmeta.img
 fastboot flash vbmeta_system --disable-verity --disable-verification vbmeta_system.img
 fastboot reboot bootloader
 ```
 The vbmeta.img and vbmeta_system.img files are included in the official firmware. [Download firmware](https://mirrors-obs-1.lolinet.com/firmware/lenowow/2020/Tab_P11_Pro/TB-J706F/)
-```
+```bash
 fastboot flash recovery ~/fox_12.1/out/target/product/pearl_prc_wifi/OrangeFox-R12.0-Unofficial-pearl.img
 fastboot reboot recovery
 ```
