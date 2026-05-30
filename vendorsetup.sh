@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-add_lunch_combo omni_pearl_prc_wifi-user
-add_lunch_combo omni_pearl_prc_wifi-userdebug
-add_lunch_combo omni_pearl_prc_wifi-eng
+export FOX_BUILD_DEVICE=pearl_prc_wifi
+export FOX_AB_DEVICE=1
+export FOX_VANILLA_BUILD=1
+export FOX_TARGET_DEVICES="pearl_prc_wifi,J706F,LenovoTB-J706F_PRC"

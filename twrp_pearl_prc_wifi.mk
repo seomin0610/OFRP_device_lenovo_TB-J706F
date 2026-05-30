@@ -15,6 +15,8 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 # Inherit from pearl_prc_wifi device
 $(call inherit-product, device/lenovo/pearl_prc_wifi/device.mk)
 
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
 PRODUCT_DEVICE := pearl_prc_wifi
 PRODUCT_NAME := twrp_pearl_prc_wifi
 PRODUCT_BRAND := Lenovo

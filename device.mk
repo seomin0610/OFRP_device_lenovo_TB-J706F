@@ -30,3 +30,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/goodix_cfg_group.bin:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/firmware/goodix_cfg_group.bin
+
+# some OrangeFox-specific settings
+$(call inherit-product, $(LOCAL_PATH)/fox_pearl_prc_wifi.mk)
