@@ -5,6 +5,7 @@ OrangeFox Recovery Project (OFRP) for Lenovo TB-J706F
 
 ## How to build
 Check OFRP official guide https://wiki.orangefox.tech/en/dev/building
+
 ```bash
 cd ~/fox_12.1
 export ALLOW_MISSING_DEPENDENCIES=true
