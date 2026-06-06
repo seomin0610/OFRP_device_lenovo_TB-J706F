@@ -49,6 +49,11 @@ on fs
     chmod 0666 /dev/binder
     chmod 0666 /dev/hwbinder
     chmod 0666 /dev/vndbinder
+    mount cpuset none /dev/cpuset nodev noexec nosuid
+    mkdir /dev/cpuset/foreground
+    write /dev/cpuset/foreground/cpus 0-7
+    write /dev/cpuset/foreground/mems 0
+    chmod 0666 /dev/cpuset/foreground/tasks    
     start hwservicemanager
     start qseecomd
     exec u:r:recovery:s0 -- /system/bin/sleep 2        
