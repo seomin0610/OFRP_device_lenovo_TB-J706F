@@ -33,6 +33,8 @@ on early-init
     write /dev/cpuset/foreground/mems 0
     chmod 0666 /dev/cpuset/foreground/tasks
     chmod 0666 /dev/cpuset/tasks
+    setprop init.svc.keystore2 stopped
+    stop keystore2    
 
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
@@ -60,7 +62,7 @@ on fs
     chmod 0666 /dev/vndbinder  
     start hwservicemanager
     start qseecomd
-    exec u:r:recovery:s0 -- /system/bin/sleep 2        
+    exec u:r:recovery:s0 -- /system/bin/sleep 5        
     start adbd
 
 service qseecomd /vendor/bin/qseecomd

@@ -1,0 +1,22 @@
+{
+  "Cgroups": [
+    {
+      "Controller": "cpuacct",
+      "Path": "/acct",
+      "Mode": "0555"
+    },
+    {
+      "Controller": "cpuset",
+      "Path": "/dev/cpuset",
+      "Mode": "0755",
+      "UID": "system",
+      "GID": "system"
+    }
+  ],
+  "Cgroups2": {
+    "Path": "/dev/cg2_bpf",
+    "Mode": "0600",
+    "UID": "root",
+    "GID": "root"
+  }
+}
