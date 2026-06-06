@@ -5,6 +5,40 @@ OrangeFox Recovery Project (OFRP) for Lenovo TB-J706F
 
 ## How to build
 Check OFRP official guide https://wiki.orangefox.tech/en/dev/building
+> [!NOTE]
+>For those building the recovery themselves:
+If you build the firmware without any modifications, selecting Reboot to System in OrangeFox may boot back into OrangeFox instead of Android.
+This happens because TWRP's `clear_bootloader_message()` cannot locate the `/misc` partition due to differences in the fstab format.
+To work around this issue, either reboot into the bootloader and run `fastboot erase misc` followed by `fastboot reboot`, or modify `static void reboot()` in `~/fox_12.1/bootable/recovery/twrp.cpp` as shown below before building.
+
+<details>
+  <summary>Modification instructions:</summary>
+  
+Modify the following section in `static void reboot()` as shown below:  
+  
+```
+  ...
+	else if (Reboot_Arg == "fastboot")
+		TWFunc::tw_reboot(rb_fastboot);
+	else {
+		// clear misc
+		std::string misc_path = "";
+		if (TWFunc::Path_Exists("/dev/block/by-name/misc")) {
+		    misc_path = "/dev/block/by-name/misc";
+		}
+		if (!misc_path.empty()) {
+		    std::string cmd = "dd if=/dev/zero of=" + misc_path + " bs=4096 count=1 2>/dev/null";
+		    TWFunc::Exec_Cmd(cmd);
+		    LOGINFO("misc cleared: %s\n", misc_path.c_str());
+		} else {
+		    LOGINFO("misc partition not found!\n");
+		}
+		
+		TWFunc::tw_reboot(rb_system);
+	}
+```
+
+</details>
 
 ```bash
 cd ~/fox_12.1

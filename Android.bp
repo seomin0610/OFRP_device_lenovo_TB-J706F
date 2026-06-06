@@ -7,3 +7,15 @@
 
 soong_namespace {
 }
+
+cc_prebuilt_binary {
+    name: "qseecomd_recovery",
+    stem: "qseecomd",
+    srcs: ["recovery/root/vendor/bin/qseecomd"],
+    compile_multilib: "64",
+    recovery: true,
+    strip: {
+        none: true,
+    },
+    check_elf_files: false,
+}
