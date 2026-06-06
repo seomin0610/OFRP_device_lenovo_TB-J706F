@@ -72,7 +72,7 @@ service vendor.keymaster-4-1 /vendor/bin/hw/android.hardware.keymaster@4.1-servi
 on late-init
     start qseecomd
 
-on property:vendor.sys.listeners.registered=true
+on property:init.svc.qseecomd=stopped
     start vendor.keymaster-4-0
     start vendor.keymaster-4-1
 
