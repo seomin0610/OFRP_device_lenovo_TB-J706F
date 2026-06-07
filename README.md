@@ -64,6 +64,14 @@ fastboot flash recovery ~/fox_12.1/out/target/product/pearl_prc_wifi/OrangeFox-R
 fastboot reboot recovery
 ```
 
+## If the folder names in `/data/` look weird
+
+The folders are encrypted, so their names may look strange.
+
+I tried using keystore2 to fix this, but the device is running a 4.14 kernel that still has the `BINDER_SET_MAX_THREADS` bug. As a result, keystore2 fails to start and the files cannot be decrypted.
+
+Fixing this would require building a custom kernel. I don't have enough time to work on it right now, but I'll look into it when I get some free time.
+
 ## Device specifications
 
 Feature   | Specification
