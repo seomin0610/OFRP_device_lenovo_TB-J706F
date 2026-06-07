@@ -32,7 +32,8 @@ on early-init
     write /dev/cpuset/foreground/cpus 0-7
     write /dev/cpuset/foreground/mems 0
     chmod 0666 /dev/cpuset/foreground/tasks
-    chmod 0666 /dev/cpuset/tasks    
+    chmod 0666 /dev/cpuset/tasks
+    mkdir /dev/cgroup_info
 
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
@@ -50,6 +51,9 @@ on property:ro.debuggable=1
 on fs
     wait /dev/block/platform/soc/1d84000.ufshc
     symlink /dev/block/platform/soc/1d84000.ufshc /dev/block/bootdevice
+    mkdir /dev/cgroup_info
+    copy /system/etc/cgroup.rc /dev/cgroup_info/cgroup.rc
+    chmod 0644 /dev/cgroup_info/cgroup.rc    
     chmod 0660 /dev/qseecom
     chown system drmrpc /dev/qseecom
     chmod 0664 /dev/ion
@@ -57,10 +61,12 @@ on fs
     symlink /dev/binderfs/vndbinder /dev/vndbinder
     chmod 0666 /dev/binder
     chmod 0666 /dev/hwbinder
-    chmod 0666 /dev/vndbinder  
+    chmod 0666 /dev/vndbinder
     start hwservicemanager
     start qseecomd
-    exec u:r:recovery:s0 -- /system/bin/sleep 5        
+    exec u:r:recovery:s0 -- /system/bin/sleep 2
+    start keystore2
+    exec u:r:recovery:s0 -- /system/bin/sleep 3
     start adbd
 
 service qseecomd /vendor/bin/qseecomd
@@ -90,6 +96,12 @@ service hwservicemanager /system/bin/hwservicemanager
     group root
     disabled
     onrestart setprop hwservicemanager.ready false
+    seclabel u:r:recovery:s0
+
+service keystore2 /system/bin/keystore2 /tmp/misc/keystore
+    user root
+    group keystore readproc log
+    disabled
     seclabel u:r:recovery:s0
 
 on property:init.svc.qseecomd=stopped
